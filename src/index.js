@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import YTSearch from 'youtube-api-search';
 import VideoList from './components/video_list';
 import SearchBar from './components/search_bar';
-import VideoDetails from './components/video_details'
+import VideoDetails from './components/video_details';
 
 const API_KEY = 'AIzaSyBp5c_RHWKLrImLcj-FNb5Kp5jjzWtlVFI';
 
@@ -13,11 +13,17 @@ class App extends Component {
     super(props)
 
     //empty array before searching
-    this.state = { videos: [] }
+    this.state = {
+      videos: [],
+      selectedVideo: null
+     }
 
     YTSearch({key: API_KEY, term: 'surfboards'}, (videos) => {
       //we update our array
-      this.setState({ videos })
+      this.setState({
+        videos: videos,
+        selectedVideo: videos[0]
+       })
       //es6 syntax, only works if the key is the same as the variable name
       //this.setState({ videos: videos })
     });
@@ -26,8 +32,10 @@ class App extends Component {
     return (
       <div>
         <SearchBar />
-        {/* <VideoDetails video={this.state.videos[0]}/> */}
-        <VideoList videos={this.state.videos} />
+        <VideoDetails video={this.state.selectedVideo} />
+        <VideoList
+          onVideoSelect={selectedVideo => this.setState({selectedVideo}) }
+          videos={this.state.videos} />
       </div>
     );
   }
