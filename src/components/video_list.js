@@ -5,7 +5,7 @@ const VideoList = (props) => {
   const videoItems = props.videos.map((video) => {
     return(
     <VideoListItem
-      onVideoSelect={props.onVideoSelect}
+      onVideoClick={props.onVideoSelect}
       key={video.etag} video={video} />
     )
   })
@@ -18,5 +18,4 @@ const VideoList = (props) => {
 }
 
 export default VideoList;
-
 //when call the array, it appears twice
