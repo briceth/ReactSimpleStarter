@@ -4,6 +4,8 @@ import YTSearch from 'youtube-api-search';
 import VideoList from './components/video_list';
 import SearchBar from './components/search_bar';
 import VideoDetails from './components/video_details';
+import Axios from 'axios';
+import Request from 'superagent';
 
 const API_KEY = 'AIzaSyBp5c_RHWKLrImLcj-FNb5Kp5jjzWtlVFI';
 
@@ -16,7 +18,18 @@ class App extends Component {
     this.state = {
       videos: [],
       selectedVideo: null
-     }
+    }
+
+       //Ne supporte pas tous les browsers
+       // Axios.get('http://swapi.co/api/people/1/').then((response) => {console.log(response)})
+
+       //Supporte tous les browser, possibilité d'ajouter des headers, exemple= KEY_API
+      //  Request('GET', 'http://swapi.co/api/people/1/').then((response) => {
+      //     this.setState({
+       //
+      //     })
+      //  }.bind(this));
+
 
     YTSearch({key: API_KEY, term: 'surfboards'}, (videos) => {
       //we update our array
