@@ -4,22 +4,30 @@ class SearchBar extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { term: 'default state' }
+    this.state = { term: '' }
   }
+
   render() {
     return (
       <div className="search-bar">
         <input
           //important to grab the value of the input!
           value={this.state.term}
-          onChange={event => this.setState({ term: event.target.value })}/>
+          onChange={event => this.onChangeTerm(event.target.value)}/>
       </div>
     )
   }
-//event handler return an
-  onInputChange (event) { //event object
-    console.log(event.target.value);
+
+  onChangeTerm(term) {
+    this.setState({term})
+    this.props.videoSearchTerm(term)
   }
+
+
+//event handler return an
+  // onInputChange(event) { //event object
+  //   console.log(event.target.value);
+  // }
 }
 
 export default SearchBar;

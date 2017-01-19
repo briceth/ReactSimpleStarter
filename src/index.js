@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import Axios from 'axios';
+import Request from 'superagent';
 import YTSearch from 'youtube-api-search';
 import VideoList from './components/video_list';
 import SearchBar from './components/search_bar';
 import VideoDetails from './components/video_details';
-import Axios from 'axios';
-import Request from 'superagent';
 
 const API_KEY = 'AIzaSyBp5c_RHWKLrImLcj-FNb5Kp5jjzWtlVFI';
 
@@ -19,32 +19,25 @@ class App extends Component {
       videos: [],
       selectedVideo: null
     }
-
-       //Ne supporte pas tous les browsers
-       // Axios.get('http://swapi.co/api/people/1/').then((response) => {console.log(response)})
-
-       //Supporte tous les browser, possibilité d'ajouter des headers, exemple= KEY_API
-      //  Request('GET', 'http://swapi.co/api/people/1/').then((response) => {
-      //     this.setState({
-       //
-      //     })
-      //  }.bind(this));
-
-
-    YTSearch({key: API_KEY, term: 'surfboards'}, (videos) => {
-      //we update our array
-      this.setState({
-        videos: videos,
-        selectedVideo: videos[0]
-       })
-      //es6 syntax, only works if the key is the same as the variable name
-      //this.setState({ videos: videos })
-    });
+    this.videoSearch('surfboards')
   }
+
+  videoSearch(term) {
+      YTSearch({key: API_KEY, term: term }, (videos) => {
+        //we update our array
+        this.setState({
+          videos: videos,
+          selectedVideo: videos[0]
+        //es6 syntax, only works if the key is the same as the variable name
+        //this.setState({ videos: videos })
+      })
+    })
+  }
+
   render() {
     return (
       <div>
-        <SearchBar />
+        <SearchBar videoSearchTerm={ (term) => this.videoSearch(term)}/>
         <VideoDetails video={this.state.selectedVideo} />
         <VideoList
           onVideoSelect={selectedVideo => this.setState({selectedVideo}) }
